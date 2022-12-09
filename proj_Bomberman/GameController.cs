@@ -369,6 +369,7 @@ namespace proj_Bomberman
                                 int index = 10000 * obj.BombIndex + 100 * temp_row + temp_col;
                                 AddBlast(index);
                                 DisposeFromMap(dummy, temp_row, temp_col);
+                                _blastCollection[index].Accelerate();
                             }
                         }
                         else
@@ -415,20 +416,17 @@ namespace proj_Bomberman
 
         private void AddBlast(int index)
         {
-            if (!_blastCollection.ContainsKey(index))
-            {
-                _blastCollection[index] = new Blast(index, DisposeBlast);
-                AddToCanvas(_blastCollection[index], (index/100) % 100, index % 100);
-            }
+            _blastCollection[index] = new Blast(index, DisposeBlast);
+            AddToCanvas(_blastCollection[index], (index/100) % 100, index % 100);
         }
 
         private void DisposeBlast(Blast obj, int index)
         {
-            if (_blastCollection.ContainsKey(index))
+            if (_blastCollection.ContainsKey(index) && _blastCollection[index] == obj)
             {
-                _MainCanvas?.Children.Remove(obj.img);
                 _blastCollection.Remove(index);
             }
+            _MainCanvas?.Children.Remove(obj.img);
         }
 
         private void DisposeItem(MapObject obj, int row, int col)

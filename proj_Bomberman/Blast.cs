@@ -32,6 +32,11 @@ namespace proj_Bomberman
             dispose_self(this, BlastIndex);
         }
 
+        public void Accelerate()
+        {
+            detonate_tim.Interval = new TimeSpan(0, 0, 0, 0, 200);
+        }
+
         public void StopTimer()
         {
             detonate_tim.Stop();
